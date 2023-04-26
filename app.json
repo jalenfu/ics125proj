@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "ics125proj",
+    "slug": "ics125proj",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "ics125proj"
+}
