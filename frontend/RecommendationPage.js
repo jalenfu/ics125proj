@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
   },
   pageText: {
     fontSize: 20,
-    fontWeight
-  }
-})
+    fontWeight: 'bold',
+  },
+});
+export default RecommendationPage
