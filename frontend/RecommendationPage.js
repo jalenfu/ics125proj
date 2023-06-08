@@ -150,4 +150,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-export default RecommendationPage
+export default RecommendationPage;
