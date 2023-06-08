@@ -1,11 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, DeviceEventEmitter } from 'react-native';
 
 const ScreenTimePage = () => {
   // Mock screen time data
-  const screenTimeToday = '4 hours 30 minutes';
   const screenTimeLast7Days = [3, 5, 6, 4, 4, 5, 6]; // Array of screen time values for the last 7 days
-
+  const screenTimeToday = screenTimeLast7Days[6]+" hours";
+  DeviceEventEmitter.emit("OnSaveInfo", {
+    ScreenTime: screenTimeLast7Days
+  });
+  
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Screen Time Today</Text>

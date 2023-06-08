@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, DeviceEventEmitter } from 'react-native';
 
 const MoodPage = () => {
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [moodArray, setMoodArray] = useState([]);
 
-  const handleSelect = value => {
-    setSelectedValue(value);
+  async function handleSelect(value){
+    const updatedMoodArray = [...moodArray, value];
+    if (updatedMoodArray.length > 7) {
+      updatedMoodArray.shift(); // Remove the first element if the array size exceeds 7
+    }
+    DeviceEventEmitter.emit("OnSaveInfo", {
+      Moods : updatedMoodArray
+    });
+    setMoodArray(updatedMoodArray);
+
   };
+
 
   return (
     <View style={styles.container}>
@@ -25,7 +34,7 @@ const MoodPage = () => {
             key={index}
             style={[
               styles.bar,
-              selectedValue === index && styles.selectedBar,
+              moodArray[moodArray.length - 1] === index && styles.selectedBar,
             ]}
             onPress={() => handleSelect(index)}
           >
