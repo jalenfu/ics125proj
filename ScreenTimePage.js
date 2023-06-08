@@ -5,6 +5,8 @@ const ScreenTimePage = () => {
   // Mock screen time data
   const screenTimeLast7Days = [3, 5, 6, 4, 4, 5, 6]; // Array of screen time values for the last 7 days
   const screenTimeToday = screenTimeLast7Days[6]+" hours";
+  const totalScreenTime = screenTimeLast7Days.reduce((sum, time) => sum + time, 0);
+
   DeviceEventEmitter.emit("OnSaveInfo", {
     ScreenTime: screenTimeLast7Days
   });
@@ -18,10 +20,10 @@ const ScreenTimePage = () => {
       <Text style={styles.title}>Screen Time Last 7 Days</Text>
       <View style={styles.barGraph}>
         {screenTimeLast7Days.map((time, index) => (
-          <View
-            key={index}
-            style={[styles.bar, { height: time * 20 }]}
-          ></View>
+          <View key={index} style={[styles.barContainer]}>
+            <View style={[styles.bar, { height: (time / totalScreenTime) * 3000 + '%' }]} />
+            <Text style={styles.timeText}>{time} hrs</Text>
+          </View>
         ))}
       </View>
     </View>
@@ -55,6 +57,10 @@ const styles = StyleSheet.create({
   bar: {
     width: 20,
     backgroundColor: '#2196F3',
+  },
+  timeText: {
+    marginTop: 5,
+    fontSize: 12,
   },
 });
 
