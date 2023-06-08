@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Button, TextInput, View } from 'react-native';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
 
 import HomePage from './HomePage';
 import MoodPage from './MoodPage';
@@ -112,19 +112,25 @@ function App() {
             options={{ headerShown: false }}
           >
             {() => (
-              <View>
+              <View style={styles.container}>
                 <TextInput
+                  style={styles.input}
                   placeholder="Email"
                   value={email}
                   onChangeText={setEmail}
                 />
                 <TextInput
+                  style={styles.input}
                   placeholder="Password"
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry
                 />
-                <Button title="Login" onPress={handleLogin} />
+                <Button
+                  title="Login"
+                  onPress={handleLogin}
+                  style={styles.button}
+                />
               </View>
             )}
           </Stack.Screen>
@@ -133,5 +139,29 @@ function App() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
+  input: {
+    width: '100%',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 16,
+    paddingLeft: 8,
+  },
+  button: {
+    width: '100%',
+    height: 40,
+    backgroundColor: 'blue',
+    borderRadius: 8,
+  },
+});
 
 export default App;
