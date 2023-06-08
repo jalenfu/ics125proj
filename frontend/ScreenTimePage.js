@@ -21,7 +21,7 @@ const ScreenTimePage = () => {
       <View style={styles.barGraph}>
         {screenTimeLast7Days.map((time, index) => (
           <View key={index} style={[styles.barContainer]}>
-            <View style={[styles.bar, { height: (time / totalScreenTime) * 100 + '%' }]} />
+            <View style={[styles.bar, { height: (time / totalScreenTime) * 300 + '%' }]} />
             <Text style={styles.timeText}>{time} hrs</Text>
           </View>
         ))}

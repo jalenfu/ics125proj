@@ -22,7 +22,7 @@ const StepCountPage = () => {
         {stepcountlast7days.map((steps, index) => (
           <View key={index} style={[styles.barContainer]}>
             <View
-              style={[styles.bar, { height: (steps / totalStepCount) * 100 + '%' }]}
+              style={[styles.bar, { height: (steps / totalStepCount) * 300 + '%' }]}
             />
             <Text style={styles.stepText}>{steps}</Text>
           </View>
