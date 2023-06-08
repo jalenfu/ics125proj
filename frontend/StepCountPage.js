@@ -4,7 +4,9 @@ import { View, Text, StyleSheet, DeviceEventEmitter } from 'react-native';
 const StepCountPage = () => {
   // Mock screen time data
   const stepcountlast7days = [5025, 8070, 6234, 4182, 4302, 5102, 6302]; // Array of screen time values for the last 7 days
-  const stepcounttoday = stepcountlast7days[6]+" steps";
+  // const stepcounttoday = stepcountlast7days[6]+" steps";
+  const totalStepCount = stepcountlast7days.reduce((sum, steps) => sum + steps, 0);
+
   DeviceEventEmitter.emit("OnSaveInfo", {
     StepCount: stepcountlast7days
   });
@@ -13,15 +15,17 @@ const StepCountPage = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Step Count Today</Text>
-      <Text style={styles.stepcount}>{stepcounttoday}</Text>
+      <Text style={styles.stepCount}>{stepcountlast7days[6]} steps</Text>
 
       <Text style={styles.title}>Step Count Last 7 Days</Text>
       <View style={styles.barGraph}>
         {stepcountlast7days.map((steps, index) => (
-          <View
-            key={index}
-            style={[styles.bar, { height: steps/20}]}
-          ></View>
+          <View key={index} style={[styles.barContainer]}>
+            <View
+              style={[styles.bar, { height: (steps / totalStepCount) * 2000 + '%' }]}
+            />
+            <Text style={styles.stepText}>{steps}</Text>
+          </View>
         ))}
       </View>
     </View>
@@ -55,6 +59,10 @@ const styles = StyleSheet.create({
   bar: {
     width: 20,
     backgroundColor: '#2196F3',
+  },
+  stepText: {
+    marginTop: 5,
+    fontSize: 12,
   },
 });
 
