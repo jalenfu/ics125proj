@@ -25,8 +25,8 @@ const RecommendationPage = () => {
           const avgStepCount = data.StepCount ? data.StepCount.reduce((acc, val) => acc + val) / data.StepCount.length : 0;
 
           const moodStatus = avgMood > 7 ? 'very healthy' : avgMood > 5 ? 'normal' : 'unhealthy';
-          const screenTimeStatus = avgScreenTime > 5 ? 'unhealthy' : avgScreenTime > 4 ? 'normal' : 'very healthy';
-          const stepCountStatus = avgStepCount > 6000 ? 'very healthy' : avgStepCount > 5000 ? 'normal' : 'unhealthy';
+          const screenTimeStatus = avgScreenTime > 360 ? 'unhealthy' : avgScreenTime > 120 ? 'normal' : 'very healthy';
+          const stepCountStatus = avgStepCount > 6000 ? 'very healthy' : avgStepCount > 3000 ? 'normal' : 'unhealthy';
 
           const recommendation = `${moodStatus}_${screenTimeStatus}_${stepCountStatus}`;
 
@@ -35,79 +35,97 @@ const RecommendationPage = () => {
               setRecommendation('You are doing an excellent job maintaining your health!');
               break;
             case 'very healthy_very healthy_normal':
-              setRecommendation('Keep up the good work. Just increase your step count a bit more.');
+              setRecommendation('Keep up the good work. Just increase your step count a bit more. Try to add '
+              + Math.round(6000-avgStepCount) + ' more steps to your daily routine.');
               break;
             case 'very healthy_very healthy_unhealthy':
-              setRecommendation('Your mood and screen time are great, but you need to move more.');
+              setRecommendation('Your mood and screen time are great, but you need to move more. Try to add '
+              + Math.round(3000-avgStepCount) + ' more steps to your daily routine.');
               break;
             case 'very healthy_normal_very healthy':
-              setRecommendation('Try to spend less time on screens for better health.');
+              setRecommendation('Try to spend ' + Math.round(avgScreenTime-120) + ' less minutes a day on screens for better health.');
               break;
             case 'very healthy_normal_normal':
-              setRecommendation('Try to reduce screen time and increase activity.');
+              setRecommendation('Try to reduce screen time by ' + Math.round(avgScreenTime-120) + 
+              ' minutes and increase activity by ' + Math.round(6000-avgStepCount) + 
+              ' more steps a day.');
               break;
             case 'very healthy_normal_unhealthy':
-              setRecommendation('Your mood is great, but decrease screen time and increase steps.');
+              setRecommendation('Your mood is great, but decrease screen time by ' + Math.round(avgScreenTime-120) + 
+              ' minutes and increase steps by ' + Math.round(3000-avgStepCount) + ' a day.');
               break;
             case 'very healthy_unhealthy_very healthy':
-              setRecommendation('Reduce screen time drastically but good job on the mood and steps!');
+              setRecommendation('Reduce screen time drastically by ' + Math.round(avgScreenTime-360) + ' minutes a day but good job on the mood and steps!');
               break;
             case 'very healthy_unhealthy_normal':
-              setRecommendation('You need to drastically cut down your screen time and increase steps.');
+              setRecommendation('You need to drastically cut down your screen time by ' 
+              + Math.round(avgScreenTime-360) + ' minutes and increase steps by ' + 6000-avgStepCount+' steps a day.');
               break;
             case 'very healthy_unhealthy_unhealthy':
-              setRecommendation('Screen time is too high and you need to increase activity.');
+              setRecommendation('Reduce screen time drastically by ' + Math.round(avgScreenTime-360) 
+              + ' minutes and you need to increase activity by '+Math.round(3000-avgStepCount) + ' steps a day.');
               break;
             case 'normal_very healthy_very healthy':
-              setRecommendation('Great screen time and steps, but try to improve your mood.');
+              setRecommendation('Great screen time and steps, but try to improve your daily mood by socializing and trying out new hobbies.');
               break;
             case 'normal_very healthy_normal':
-              setRecommendation('Your screen time and steps are good, but you need to work on your mood and move a bit more.');
+              setRecommendation('Your screen time and steps are good, but you need to work on your mood and move a bit more. Try decreasing screen time by '
+              + Math.round(avgScreenTime-120) + ' minutes and increasing step count by '+ Math.round(6000-avgStepCount) + ' steps a day.');
               break;
             case 'normal_very healthy_unhealthy':
-              setRecommendation('Improve your mood and increase your steps.');
+              setRecommendation('Improve your mood by socializing and trying new hobbies and increase your steps by ' + Math.round(3000-avgStepCount) + ' steps a day.');
               break;
             case 'normal_normal_very healthy':
-              setRecommendation('Try to spend less time on screens and improve your mood.');
+              setRecommendation('Try to spend less time on screens by ' + Math.round(avgScreenTime-120) 
+              + ' minutes and improve your mood by socializing and trying out new hobbies.');
               break;
             case 'normal_normal_normal':
-              setRecommendation('Everything is average. Aim for improvement in all areas.');
+              setRecommendation('Everything is average. Aim for improvement in all areas. Try increasing step count by '
+              + Math.round(6000-avgStepCount) + ' steps and spend less time on screens by ' + Math.round(avgScreenTime-120) + ' minutes a day.');
               break;
             case 'normal_normal_unhealthy':
-              setRecommendation('Improve your mood and move more.');
+              setRecommendation('Your mood and screen time are decent. Try to put down the phone and increase step count by ' +
+              Math.round(3000-avgStepCount) + ' steps a day which may increase your mood.');
               break;
             case 'normal_unhealthy_very healthy':
-              setRecommendation('Great on steps, but cut down screen time and work on your mood.');
+              setRecommendation('Great on steps, but cut down screen time by ' + Math.round(avgScreenTime-120) + ' minutes a day which may improve your mood.');
               break;
             case 'normal_unhealthy_normal':
-              setRecommendation('Reduce your screen time and improve your mood.');
+              setRecommendation('Reduce your screen time by ' + Math.round(avgScreenTime-120) + ' minutes a day which may improve your mood.');
               break;
             case 'normal_unhealthy_unhealthy':
-              setRecommendation('You need to cut down on screen time and improve your mood and steps.');
+              setRecommendation('You need to cut down on screen time by ' + Math.round(avgScreenTime-120) 
+              + ' minutes a day and increase steps by ' + Math.round(3000-avgStepCount) + ' steps a day and you may see a significant increase in your mood.');
               break;
             case 'unhealthy_very healthy_very healthy':
-              setRecommendation('Great screen time and steps but your mood needs improvement.');
+              setRecommendation('Great screen time and steps but your mood needs improvement. Maybe try socializing with new people or trying out new hobbies. We suggest seeing a licensed therapist for more info.');
               break;
             case 'unhealthy_very healthy_normal':
-              setRecommendation('Good on screen time but work on your mood and steps.');
+              setRecommendation('Good on screen time but try to increase steps by ' + Math.round(6000-avgStepCount) + ' steps a day which might improve your mood.');
               break;
             case 'unhealthy_very healthy_unhealthy':
-              setRecommendation('Screen time is great but your mood and steps need a lot of improvement.');
+              setRecommendation('Screen time is great but try increasing steps by ' + Math.round(3000-avgStepCount) + 
+              ' steps a day. Walking extra steps has been shown to significantly improve mood and standard of life');
               break;
             case 'unhealthy_normal_very healthy':
-              setRecommendation('Good on steps but your screen time and mood need improvement.');
+              setRecommendation('Good on steps but try decreasing screen time by ' + Math.round(avgScreenTime-120) 
+              + ' minutes a day. Studies show that too much screen time is detrimental to your mood.');
               break;
             case 'unhealthy_normal_normal':
-              setRecommendation('Everything is average except your mood. Work on improving your mood.');
+              setRecommendation('Everything is average except your mood. Work on improving your mood by increasing steps by ' 
+              + Math.round(6000-avgStepCount) + 'steps and decrease screen time by ' + Math.round(avgScreenTime-120) + ' minutes a day.');
               break;
             case 'unhealthy_normal_unhealthy':
-              setRecommendation('You need to work on your mood and take more steps.');
+              setRecommendation('You need to work on your mood by increasing steps by ' + Math.round(3000-avgStepCount) + 
+              ' steps a day. Walking extra steps has been shown to significantly improve mood and standard of life');
               break;
             case 'unhealthy_unhealthy_very healthy':
-              setRecommendation('Great on steps but your mood and screen time are unhealthy.');
+              setRecommendation('Great on steps but your mood and screen time are unhealthy. Try decreasing screen time by ' + 
+              avgScreenTime-120 + ' minutes a day.');
               break;
             case 'unhealthy_unhealthy_normal':
-              setRecommendation('Good job on the steps but you need to work on your mood and cut down screen time.');
+              setRecommendation('Good job on the steps but you need to work on your mood and cut down screen time by ' + 
+              avgScreenTime-120 + ' minutes a day.');
               break;
             case 'unhealthy_unhealthy_unhealthy':
               setRecommendation('Your health status is alarming. Please contact a health professional.');
