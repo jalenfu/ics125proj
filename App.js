@@ -62,29 +62,6 @@ function App() {
       Scopes.FITNESS_SLEEP_READ,
     ],
   };
-  
-  GoogleFit.checkIsAuthorized().then(() => {
-    var authorized = GoogleFit.isAuthorized;
-    console.log(authorized);
-    if (authorized) {
-      // if already authorized, fetch data
-    } else {
-      // Authentication if already not authorized for a particular device
-      GoogleFit.authorize(options)
-        .then(authResult => {
-          if (authResult.success) {
-            console.log('AUTH_SUCCESS');
-
-            // if successfully authorized, fetch data
-          } else {
-            console.log('AUTH_DENIED ' + authResult.message);
-          }
-        })
-        .catch(() => {
-          dispatch('AUTH_ERROR');
-        });
-    }
-  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -112,6 +89,29 @@ function App() {
       console.error('Error logging in:', error);
     }
   }
+
+  GoogleFit.checkIsAuthorized().then(() => {
+    var authorized = GoogleFit.isAuthorized;
+    console.log(authorized);
+    if (authorized) {
+      // if already authorized, fetch data
+    } else {
+      // Authentication if already not authorized for a particular device
+      GoogleFit.authorize(options)
+        .then(authResult => {
+          if (authResult.success) {
+            console.log('AUTH_SUCCESS');
+
+            // if successfully authorized, fetch data
+          } else {
+            console.log('AUTH_DENIED ' + authResult.message);
+          }
+        })
+        .catch(() => {
+          dispatch('AUTH_ERROR');
+        });
+    }
+  });
 
   async function saveData(profileInfo) {
     console.log('Called function from Profile Page');
