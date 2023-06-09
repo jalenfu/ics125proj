@@ -26,12 +26,10 @@ const ProfilePage = ({}) => {
     const user = auth.currentUser;
     const userId = user.uid;
     return onValue(ref(database, `userinfo/${userId}`), querySnapShot => {
-      let data = querySnapShot.val() || {};
-      if (data != {}) {
-        setHeight(data.Height);
-        setWeight(data.Weight);
-        setAge(data.Age);
-      }
+      let data = querySnapShot.val() || {Height: '', Weight: '', Age: ''};
+      setHeight(data.Height);
+      setWeight(data.Weight);
+      setAge(data.Age);
     });
   }, []);
 
