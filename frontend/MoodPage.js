@@ -25,9 +25,11 @@ const MoodPage = () => {
     const user = auth.currentUser;
     const userId = user.uid;
     return onValue(ref(database, `userinfo/${userId}`), querySnapShot => {
-      let data = querySnapShot.val() || {Moods: [0]};
-      setMoodArray(data.Moods);
-      setMoodLast7Days(data.Moods);
+      let data = querySnapShot.val() || {Moods: []};
+      if ("Moods" in data) {
+        setMoodArray(data.Moods);
+        setMoodLast7Days(data.Moods);
+      }
     });
   }, []);
 

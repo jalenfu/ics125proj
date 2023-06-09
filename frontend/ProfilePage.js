@@ -27,9 +27,12 @@ const ProfilePage = ({}) => {
     const userId = user.uid;
     return onValue(ref(database, `userinfo/${userId}`), querySnapShot => {
       let data = querySnapShot.val() || {Height: '', Weight: '', Age: ''};
-      setHeight(data.Height);
-      setWeight(data.Weight);
-      setAge(data.Age);
+      if ("Height" in data)
+        setHeight(data.Height);
+      if ("Weight" in data)
+        setWeight(data.Weight);
+      if ("Age" in data)
+        setAge(data.Age);
     });
   }, []);
 
