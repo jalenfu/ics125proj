@@ -22,6 +22,7 @@ const StepCountPage = () => {
 
       try {
         const res = await GoogleFit.getDailyStepCountSamples(options);
+        console.log(res)
         if (res.length !== 0) {
           for (let i = 0; i < res.length; i++) {
             if (res[i].source === 'com.google.android.gms:estimated_steps') {
