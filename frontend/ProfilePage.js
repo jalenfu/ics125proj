@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import {DeviceEventEmitter} from "react-native"
+import { getAuth } from "firebase/auth";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 const ProfilePage = ({}) => {
   const [height, setHeight] = useState(''); //saves a variable from setHeight to height
@@ -8,7 +10,6 @@ const ProfilePage = ({}) => {
   const [age, setAge] = useState('');
 
   async function handleSave(){
-    // Needs save logic
     DeviceEventEmitter.emit("OnSaveInfo", {
       Height: height,
       Weight: weight,
@@ -18,6 +19,19 @@ const ProfilePage = ({}) => {
     console.log('Weight:', weight);
     console.log('Age:', age);
   }
+
+  React.useEffect(() => {
+    const auth = getAuth();
+    const database = getDatabase();
+    const user = auth.currentUser;
+    const userId = user.uid;
+    return onValue(ref(database, `userinfo/${userId}`), querySnapShot => {
+      let data = querySnapShot.val() || {Height: '', Weight: '', Age: ''};
+      setHeight(data.Height);
+      setWeight(data.Weight);
+      setAge(data.Age);
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
